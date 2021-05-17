@@ -10,6 +10,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenHardwareMonitor.Hardware.TBalancer {
 
@@ -102,12 +103,25 @@ namespace OpenHardwareMonitor.Hardware.TBalancer {
     public delegate FT_STATUS FT_ReadByteDelegate(FT_HANDLE handle,
       out byte buffer, uint bytesToRead, out uint bytesReturned);
 
+    public delegate FT_STATUS FT_GetDeviceInfoDetailDelegate(int dwIndex, ref uint lpdwFlags, ref uint lpdwType,
+      ref uint lpdwID,
+      ref uint lpdwLocId, [In, Out] byte[] pcSerialNumber, [In, Out] byte[] pcDescription,
+      out FT_HANDLE ftHandle);
+
     public static readonly FT_CreateDeviceInfoListDelegate 
       FT_CreateDeviceInfoList = CreateDelegate<
       FT_CreateDeviceInfoListDelegate>("FT_CreateDeviceInfoList");
+
+    /// <summary>
+    /// Warn: This function seems to sometimes crash the CLR due to some internal buffer overflow. Use the next instead.
+    /// </summary>
     public static readonly FT_GetDeviceInfoListDelegate 
       FT_GetDeviceInfoList = CreateDelegate<
       FT_GetDeviceInfoListDelegate>("FT_GetDeviceInfoList");
+
+    public static readonly FT_GetDeviceInfoDetailDelegate
+      FT_GetDeviceInfoDetail = CreateDelegate<FT_GetDeviceInfoDetailDelegate>("FT_GetDeviceInfoDetail");
+
     public static readonly FT_OpenDelegate 
       FT_Open = CreateDelegate<
       FT_OpenDelegate>("FT_Open");
