@@ -271,8 +271,9 @@ namespace OpenHardwareMonitor.GUI {
         case SensorType.Load:
         case SensorType.Control:
         case SensorType.Level:
-          notifyIcon.Icon = CreatePercentageIcon();
-          break;
+          //TODO: add option to toggle this
+          //notifyIcon.Icon = CreatePercentageIcon();
+          //break;
         default:
           notifyIcon.Icon = CreateTransparentIcon();
           break;
